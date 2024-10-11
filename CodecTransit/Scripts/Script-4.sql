@@ -1,0 +1,1 @@
+update users set email = ?, name = ?, photo = ? where phone = ?;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="postgres-jdbc-16a11cc6148-6ff79aff5a952c84" provider="postgresql" driver="postgres-jdbc" name="PostgreSQL - base_loyalty" save-password="true" read-only="false">
+		<connection host="172.20.128.19" port="5432" server="" database="base_loyalty" url="jdbc:postgresql://172.20.128.19:5432/base_loyalty" user="viber" password="BVUEc1NCRkUXBxVe9g==" type="dev">
+			<provider-property name="@dbeaver-show-non-default-db@" value="false"/>
+			<provider-property name="@dbeaver-show-template-db@" value="false"/>
+		</connection>
+	</data-source>
+	<data-source id="postgres-jdbc-16a5df6fd50-55134188fe149c59" provider="postgresql" driver="postgres-jdbc" name="PostgreSQL - base_loyalty remote" save-password="true" read-only="false">
+		<connection host="172.20.128.19" port="5432" server="" database="base_loyalty" url="jdbc:postgresql://172.20.128.19:5432/base_loyalty" user="viber" password="BVUEc1NCRkUXBxVe9g==" type="dev">
+			<property name="connectTimeout" value="20"/>
+			<property name="loginTimeout" value="20"/>
+			<provider-property name="@dbeaver-show-non-default-db@" value="true"/>
+			<provider-property name="@dbeaver-show-template-db@" value="false"/>
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="true">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+			<network-handler type="CONFIG" id="postgre_ssl" enabled="false" save-password="true"/>
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="true" save-password="true" user="andyp" password="ERQVL0dXQwQKBxZe9g==">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="implementation" value="jsch"/>
+				<property name="host" value="78.111.215.83"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+		</connection>
+	</data-source>
+	<filters/>
+</data-sources>

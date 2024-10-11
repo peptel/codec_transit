@@ -1,0 +1,98 @@
+{
+	"folders": {},
+	"connections": {
+		"postgres-jdbc-16a11cc6148-6ff79aff5a952c84": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "PostgreSQL - base_loyalty",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "172.20.128.19",
+				"port": "5432",
+				"database": "base_loyalty",
+				"url": "jdbc:postgresql://172.20.128.19:5432/base_loyalty",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "false",
+					"@dbeaver-show-template-db@": "false"
+				}
+			},
+			"custom-properties": {
+				"resultset.maxrows": "6000"
+			}
+		},
+		"postgres-jdbc-16a5df6fd50-55134188fe149c59": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "PostgreSQL - base_loyalty remote",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "172.20.128.19",
+				"port": "5432",
+				"database": "base_loyalty",
+				"url": "jdbc:postgresql://172.20.128.19:5432/base_loyalty",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20",
+					"loginTimeout": "20"
+				},
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true",
+					"@dbeaver-show-template-db@": "false"
+				},
+				"handlers": {
+					"ssh_tunnel": {
+						"type": "TUNNEL",
+						"enabled": true,
+						"save-password": true,
+						"properties": {
+							"host": "78.111.215.83",
+							"sshConnectTimeout": "10000",
+							"authType": "PASSWORD",
+							"port": "22",
+							"implementation": "jsch"
+						}
+					}
+				}
+			}
+		},
+		"postgres-jdbc-16e12027c94-6c1ab48e0f33bd8b": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "PostgreSQL - loyalty",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "172.20.128.19",
+				"port": "5432",
+				"database": "loyalty",
+				"url": "jdbc:postgresql://172.20.128.19:5432/loyalty",
+				"home": "postgresql-x64-10",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20",
+					"loginTimeout": "20"
+				},
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true",
+					"@dbeaver-show-template-db@": "false"
+				}
+			},
+			"custom-properties": {
+				"resultset.maxrows": "1000"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Разработка",
+			"color": "255,255,255",
+			"description": "База данных для разработки",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false
+		}
+	}
+}
