@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import net.peptel.transit.dao.DAOException;
 import net.peptel.transit.dao.DAOManagement;
@@ -17,13 +19,13 @@ import net.peptel.transit.util.Log;
  */
 public abstract class CodecAdapter implements Runnable, Codec {
 	protected FraudMonitor fraudMonitor;
-	
+
 	private static final long CODEC_SELECTION_TIMEOUT = 1 * 60 * 1000;// 100;
 	private static final long CODEC_EXCEPTION_TIMEOUT = 5 * 60 * 1000;// 100;
 
 	protected SendingMode sendingMode;
 	protected ActivityMode activityMode;
-	
+
 	private CodecMonitor monitor;
 
 	protected int codecType;
@@ -37,6 +39,8 @@ public abstract class CodecAdapter implements Runnable, Codec {
 
 		int sleepTimeOut = 1;
 		long startNotificationTime = 0, deltaNotificationTime = 0, deltaNotificationSec = 0, startSleep = 0, realSleep = 0;
+		
+		
 
 		while (monitor.isRunning()) {
 			try {
@@ -56,32 +60,35 @@ public abstract class CodecAdapter implements Runnable, Codec {
 
 					switch (sendingMode) {
 					case SINGLE_MODE:
+						
 						Log.log.info("SINGLE_MODE");
+						
+						int coresAmount = Runtime.getRuntime().availableProcessors(); 
+						ExecutorService exec = Executors.newFixedThreadPool(coresAmount);
+						
 						for (Message message : messages) {
-							try {
-								Log.log.info("Codec " + getCodecType() + " name: " + getCodecName() +  ". Try send");
-								send(message);
-								Log.log.info("Codec " + getCodecType() + " name: " + getCodecName() +  ". Sent");
-								
-							} catch (IOException e) {
-								Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: " + message, e);
-								backstatus(message, dao);
-								Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: restore status");
-								
-								sleepTimeOut = sleepTimeOut == 10 ? 1 : sleepTimeOut + 1;
 
-								synchronized (monitor) {
+							exec.execute(new Runnable() {
+								
+								@Override
+								public void run() {
 									try {
-										Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". EXCEPTION SLEEP TIMEOUT: " + (getExceptionSelectionTimeout() * sleepTimeOut) );
-										monitor.wait(getExceptionSelectionTimeout() * sleepTimeOut);
-									} catch (InterruptedException ie) {
-										Log.log.error("WAIT SELECT INTERRUPTED.");
-										sleepTimeOut = 1;
-									}
+										Log.log.info("Codec " + getCodecType() + " name: " + getCodecName() +  ". Try send");
+										send(message);
+										Log.log.info("Codec " + getCodecType() + " name: " + getCodecName() +  ". Sent");
+										
+									} catch (IOException e) {
+										Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: " + message, e);
+										backstatus(message, dao);
+										Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: restore status");
+										
+									}		
 								}
-
-							}
+							
+							});
 						}
+						
+						exec.shutdown();
 
 						break;
 					case MULTIPLY_MODE:
@@ -211,12 +218,11 @@ public abstract class CodecAdapter implements Runnable, Codec {
 	public ActivityMode getActivityMode() {
 		return activityMode;
 	};
-	
+
 	/**
 	 * registry incoming message into DB
 	 * 
-	 * @param message
-	 *            is single record for outgoing_log
+	 * @param message is single record for outgoing_log
 	 * @param codecID
 	 * @return
 	 */
@@ -297,17 +303,15 @@ public abstract class CodecAdapter implements Runnable, Codec {
 	public long getExceptionSelectionTimeout() {
 		return CODEC_EXCEPTION_TIMEOUT;
 	}
-	
+
 	public void exit() {
 		Log.log.info("stub. codec " + codecName + " has been closed");
 	}
 
 	@Override
 	public String toString() {
-		return "Codec [sendingMode=" + sendingMode + ", activityMode=" + activityMode + ", codecType="
-				+ codecType + ", codecName=" + codecName + "]";
+		return "Codec [sendingMode=" + sendingMode + ", activityMode=" + activityMode + ", codecType=" + codecType
+				+ ", codecName=" + codecName + "]";
 	}
-	
-	
 
 }
