@@ -73,14 +73,14 @@ public abstract class CodecAdapter implements Runnable, Codec {
 								@Override
 								public void run() {
 									try {
-										Log.log.info("Codec " + getCodecType() + " name: " + getCodecName() +  ". Try send");
+										Log.log.info("New Thread. Codec " + getCodecType() + " name: " + getCodecName() +  ". Try send");
 										send(message);
-										Log.log.info("Codec " + getCodecType() + " name: " + getCodecName() +  ". Sent");
+										Log.log.info("New Thread. Codec " + getCodecType() + " name: " + getCodecName() +  ". Sent");
 										
 									} catch (IOException e) {
-										Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: " + message, e);
+										Log.log.error("New Thread. Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: " + message, e);
 										backstatus(message, dao);
-										Log.log.error("Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: restore status");
+										Log.log.error("New Thread. Codec " + getCodecType() + " name: " + getCodecName() +  ". Cant send message: restore status");
 										
 									}		
 								}
