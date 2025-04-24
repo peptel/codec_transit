@@ -6,13 +6,14 @@
 			"driver": "postgres-jdbc",
 			"name": "PostgreSQL - base_loyalty",
 			"save-password": true,
-			"read-only": false,
 			"configuration": {
 				"host": "172.20.128.19",
 				"port": "5432",
 				"database": "base_loyalty",
 				"url": "jdbc:postgresql://172.20.128.19:5432/base_loyalty",
+				"configurationType": "MANUAL",
 				"type": "dev",
+				"closeIdleConnection": false,
 				"provider-properties": {
 					"@dbeaver-show-non-default-db@": "false",
 					"@dbeaver-show-template-db@": "false"
@@ -27,13 +28,14 @@
 			"driver": "postgres-jdbc",
 			"name": "PostgreSQL - base_loyalty remote",
 			"save-password": true,
-			"read-only": false,
 			"configuration": {
 				"host": "172.20.128.19",
 				"port": "5432",
 				"database": "base_loyalty",
 				"url": "jdbc:postgresql://172.20.128.19:5432/base_loyalty",
+				"configurationType": "MANUAL",
 				"type": "dev",
+				"closeIdleConnection": false,
 				"properties": {
 					"connectTimeout": "20",
 					"loginTimeout": "20"
@@ -63,14 +65,15 @@
 			"driver": "postgres-jdbc",
 			"name": "PostgreSQL - loyalty",
 			"save-password": true,
-			"read-only": false,
 			"configuration": {
 				"host": "172.20.128.19",
 				"port": "5432",
 				"database": "loyalty",
 				"url": "jdbc:postgresql://172.20.128.19:5432/loyalty",
+				"configurationType": "MANUAL",
 				"home": "postgresql-x64-10",
 				"type": "dev",
+				"closeIdleConnection": false,
 				"properties": {
 					"connectTimeout": "20",
 					"loginTimeout": "20"
@@ -83,16 +86,44 @@
 			"custom-properties": {
 				"resultset.maxrows": "1000"
 			}
+		},
+		"postgres-jdbc-195af4db1da-1c8f5a41a36584bd": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "base_loyalty",
+			"save-password": true,
+			"configuration": {
+				"host": "kz.pepsell.net",
+				"port": "54321",
+				"database": "base_loyalty",
+				"url": "jdbc:postgresql://kz.pepsell.net:54321/base_loyalty",
+				"configurationType": "MANUAL",
+				"home": "postgresql_client",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true",
+					"@dbeaver-chosen-role@": ""
+				},
+				"auth-model": "native",
+				"handlers": {}
+			}
 		}
 	},
 	"connection-types": {
 		"dev": {
-			"name": "Разработка",
+			"name": "Розробка",
 			"color": "255,255,255",
-			"description": "База данных для разработки",
+			"description": "Звичайна база даних для розробки",
 			"auto-commit": true,
 			"confirm-execute": false,
-			"confirm-data-change": false
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
 		}
 	}
 }
